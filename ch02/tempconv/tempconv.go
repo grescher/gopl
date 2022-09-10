@@ -14,6 +14,6 @@ const (
 	FreezingK     Kelvin  = 273.15
 )
 
-func (c Celsius) String() string    { return fmt.Sprintf("%g°C", c) }
-func (f Fahrenheit) String() string { return fmt.Sprintf("%g°F", f) }
-func (k Kelvin) String() string     { return fmt.Sprintf("%gK", k) }
+func (c Celsius) String() string    { return fmt.Sprintf("%.4g °C", c) }
+func (f Fahrenheit) String() string { return fmt.Sprintf("%.4g °F", f) }
+func (k Kelvin) String() string     { return fmt.Sprintf("%.4g K", k) }
