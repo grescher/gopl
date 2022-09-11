@@ -1,8 +1,4 @@
-// Write a general-purpose unit-conversion program analogous to cf that reads
-// numbers from its command-line arguments of from the standard input if there
-// are no arguments, and converts each number into units like temperature in
-// Celsius and Fahrenheit, length in feet and meters, weight in pounds and
-// kilograms, and the like.
+// conv is a general-purpose unit-conversion program analogous to cf
 package main
 
 import (
@@ -19,17 +15,45 @@ import (
 )
 
 var (
-	temp   = flag.Bool("t", false, "Print temperature conversion.")
-	length = flag.Bool("l", false, "Print length conversion.")
-	weight = flag.Bool("w", false, "Print weight conversion.")
+	l = flag.Bool("l", false, "Print length units conversion.")
+	t = flag.Bool("t", false, "Print temperature units conversion.")
+	w = flag.Bool("w", false, "Print weight units conversion.")
 )
 
+var usage = `Usage: conv [options...] [numbers]
+
+conv reads numbers from its command-line arguments or the standard 
+input if there are no arguments, and converts each number into units
+like temperature in Celsius and Fahrenheit, length in feet and meters, 
+and weight in pounds and kilograms.
+
+Options:
+  -l Print length units conversion.
+  -t Print temperature units conversion.
+  -w Print weight units conversion.
+
+If no option is set, conv prints all conversion types.
+
+Examples:
+
+conv
+conv 16
+conv -w 16.0
+conv -l -t 7 7.5 8
+`
+
 func main() {
+	if strings.HasSuffix(os.Args[0], "conv") {
+		flag.Usage = func() {
+			fmt.Fprintf(os.Stderr, usage)
+		}
+	}
 	flag.Parse()
+	length, temp, weight := *l, *t, *w
 
 	// if no flag is set, print all conversion types.
 	if flag.NFlag() < 1 {
-		*temp, *length, *weight = true, true, true
+		temp, length, weight = true, true, true
 	}
 
 	// if no command-line arguments were set, read from the standard input.
@@ -51,13 +75,13 @@ func main() {
 			fmt.Fprintf(os.Stderr, "cf: %v\n", err)
 			os.Exit(1)
 		}
-		if *temp {
+		if temp {
 			printTemp(t)
 		}
-		if *length {
+		if length {
 			printLength(t)
 		}
-		if *weight {
+		if weight {
 			printWeight(t)
 		}
 	}
