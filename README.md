@@ -9,6 +9,7 @@ All solutions was compiled and tested with *go version go1.18.5 linux/arm64*.
 1. [Tutorial](ch01) *(except the 1.3, 1.10, 1.11)*
 2. [Program Structure](ch02) *(except the 2.3-2.5)*
 3. [Basic Data Types](ch03) *(except the 3.1-3.9)*
+4. [Composite Types](ch04)
 
 ## License
 
